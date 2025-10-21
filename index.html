@@ -13,8 +13,63 @@
                 <img src="https://cdn.imweb.me/upload/S20240108926ddb22c06a8/a9cef19a79351.png" alt="PAU Logo" class="logo">
             </div>
             <h1>Under Construction</h1>
-            <p>You may contact the University via email at <a href="mailto:info@paucal.org">info@paucal.org</a></p>
+            <p>You may contact the University via email at <span id="email-copy" class="email-copy-btn">info@paucal.org</span></p>
+            <div id="copy-notification" class="copy-notification">Email address copied!</div>
         </div>
     </div>
+    
+    <script>
+        document.getElementById('email-copy').addEventListener('click', function() {
+            const email = 'info@paucal.org';
+            const emailBtn = this;
+            
+            // 클릭 애니메이션 추가
+            emailBtn.classList.add('clicked');
+            setTimeout(function() {
+                emailBtn.classList.remove('clicked');
+            }, 600);
+            
+            // 클립보드에 복사
+            navigator.clipboard.writeText(email).then(function() {
+                // 성공 시 토스트 표시
+                const notification = document.getElementById('copy-notification');
+                notification.style.display = 'block';
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(-50%) translateY(0)';
+                
+                // 2초 후 토스트 숨기기
+                setTimeout(function() {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(-50%) translateY(100px)';
+                    setTimeout(function() {
+                        notification.style.display = 'none';
+                    }, 400);
+                }, 2000);
+            }).catch(function(err) {
+                console.error('복사 실패:', err);
+                // 폴백: 텍스트 선택 방식
+                const textArea = document.createElement('textarea');
+                textArea.value = email;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                // 토스트 표시
+                const notification = document.getElementById('copy-notification');
+                notification.style.display = 'block';
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(-50%) translateY(0)';
+                
+                setTimeout(function() {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(-50%) translateY(100px)';
+                    setTimeout(function() {
+                        notification.style.display = 'none';
+                    }, 400);
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>

@@ -87,7 +87,8 @@ p {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-a {
+/* 이메일 복사 버튼 스타일 */
+.email-copy-btn {
     color: #3498db;
     text-decoration: none;
     font-weight: 600;
@@ -101,12 +102,70 @@ a {
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
     font-size: 1.1rem;
     letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
 }
 
-a:hover {
+.email-copy-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(52, 152, 219, 0.5);
     background: linear-gradient(135deg, #2980b9, #1f618d, #154360);
+}
+
+.email-copy-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+/* 클릭 시 위로 올라가는 애니메이션 */
+.email-copy-btn.clicked {
+    animation: bounceUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounceUp {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* 복사 알림 토스트 스타일 */
+.copy-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    min-width: 200px;
+    text-align: center;
+}
+
+.copy-notification::before {
+    content: '✓';
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 /* 반응형 디자인 */
@@ -131,9 +190,17 @@ a:hover {
         margin-bottom: 2.5rem;
     }
     
-    a {
+    .email-copy-btn {
         padding: 0.5rem 1rem;
         font-size: 1rem;
+    }
+    
+    .copy-notification {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 20px;
+        bottom: 20px;
+        min-width: 180px;
     }
 }
 
